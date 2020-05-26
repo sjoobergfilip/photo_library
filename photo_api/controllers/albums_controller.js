@@ -8,7 +8,7 @@ const models = require('../models');
  * GET /
  */
 const index = async (req, res) => {
-	const all_albums = await models.Album.fetchAll();
+	const all_albums = await models.Albums.fetchAll();
 	res.send({
 		status: 'success',
 		data: {
@@ -22,8 +22,8 @@ const index = async (req, res) => {
  * GET /:albumId
  */
 const show = async (req, res) => {
-	const album = await new models.Album({ id: req.params.albumId })
-		.fetch({ withRelated: ['photos'] });
+	const album = await new models.Albums({ id: req.params.albumId })
+		.fetch();
 	res.send({
 		status: 'success',
 		data: {

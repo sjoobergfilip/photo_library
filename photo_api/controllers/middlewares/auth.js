@@ -49,5 +49,4 @@ const basic = async (req, res, next) => {
 
 module.exports = {
 	basic,
-	validateJwtToken,
 }

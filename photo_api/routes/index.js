@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../controllers/middlewares/auth');
-const authController = require('../controllers/auth_controller');
 
 
 // GET
@@ -16,7 +15,7 @@ router.use('/photos', require('./photos'));
 
 // POST
 // add ability to login and get access-token and refresh-token
-router.post('/login', [auth.basic], authController.login);
+router.post('/profile', [auth.basic], require('./profile'));
 
 
 router.use('/users', require('./users'));

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/user_controller');
-const userValidationRules = require('../validation_rules/user');
+const userController = require('../controllers/users_controller');
+const userValidationRules = require('../validation_rules/users');
 
 
 /* Get all resources */

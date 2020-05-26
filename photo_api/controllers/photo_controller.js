@@ -8,7 +8,7 @@ const models = require('../models');
  * GET /
  */
 const index = async (req, res) => {
-	const all_photos = await models.Photo.fetchAll();
+	const all_photos = await models.Photos.fetchAll();
 	res.send({
 		status: 'success',
 		data: {
@@ -22,7 +22,7 @@ const index = async (req, res) => {
  * GET /:photoId
  */
 const show = async (req, res) => {
-	const photo = await new models.Photo({ id: req.params.photoId })
+	const photo = await new models.Photos({ id: req.params.photoId })
 		.fetch({ withRelated: ['albums', 'users'] });
 	res.send({
 		status: 'success',
