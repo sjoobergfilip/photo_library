@@ -1,4 +1,5 @@
 // Setting up the database connection
+
 const knex = require('knex')({
 	client: 'mysql',
 	connection: {
@@ -23,5 +24,4 @@ module.exports = {
 	Albums,
 	Photos,
 	User,
-
 };
