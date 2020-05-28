@@ -7,11 +7,11 @@ const bcrypt = require('bcrypt');
 module.exports = (bookshelf) => {
 	return bookshelf.model('User', {
 		tableName: 'users',
-		// albums() {
-		// 	return this.hasMany('Albums');
-		// }, photos() {
-		// 	return this.hasMany('Photos')
-		// }
+		albums() {
+			return this.hasMany('Albums');
+		}, photos() {
+			return this.hasMany('Photos')
+		}
 		}, {
 		hashSaltRounds: 10,
 

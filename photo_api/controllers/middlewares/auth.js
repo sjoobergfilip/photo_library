@@ -13,7 +13,6 @@ const basic = async (req, res, next) => {
 		});
 		return;
 	}
-
 	// "Basic a2FsbGUyMDAwOnNjcmlwdC1raWRxd2Vxd2Vxd2Vxd2Vxd2Vxd2Vxd2U="
 	// =>
 	// [0] = "Basic"
