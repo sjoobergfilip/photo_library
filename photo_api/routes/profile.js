@@ -6,6 +6,5 @@ const profileValidationRules = require('../validation_rules/profile');
 router.get('/', profileController.getProfile);
 //  GET profile's photos
 router.get('/photos', profileController.getPhotos);
-//  PUT a specific profile 
-router.put('/', profileValidationRules.updateProfileRules, profileController.updateProfile);
+
 module.exports = router;
