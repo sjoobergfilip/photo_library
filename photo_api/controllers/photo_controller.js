@@ -23,7 +23,7 @@ const index = async (req, res) => {
  */
 const show = async (req, res) => {
 	const photo = await new models.Photos({ id: req.params.photoId })
-		.fetch({ withRelated: ['albums', 'users'] });
+		.fetch();
 	res.send({
 		status: 'success',
 		data: {
