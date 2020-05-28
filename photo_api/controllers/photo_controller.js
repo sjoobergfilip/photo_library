@@ -1,7 +1,7 @@
 /**
  * Photo Controller
  */
-const { validationResult } = require('express-validator');
+const { matchedData, validationResult } = require('express-validator');
 
 const models = require('../models');
 /**
@@ -38,7 +38,6 @@ const show = async (req, res) => {
 
 const store = async (req, res) => {
 
-	console.log('hej', req.body);
 	// Finds the validation errors in this request and wraps them in an object with handy functions
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
@@ -49,9 +48,9 @@ const store = async (req, res) => {
 		});
 		return;
 	}
-
+	const validData = matchedData(req)
 	try {
-		const photo = await new models.Photos(req.body).save();
+		const photo = await new models.Photos(validData).save();
 		console.log("Created new photo successfully:", photo);
 		res.send({
 			status: 'success',
