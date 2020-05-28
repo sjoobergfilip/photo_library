@@ -13,7 +13,6 @@ router.get('/:userId', userController.show);
 /* Store a new resource */
 router.post('/', userValidationRules.createRules, userController.store);
 
-
 /* Destroy a specific resource */
 router.delete('/:userId', userController.destroy);
 module.exports = router;
