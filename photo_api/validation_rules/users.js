@@ -11,8 +11,8 @@ const createRules = [
         }
         return Promise.resolve();
     }),
-    //ruls fore regisger
-    body('password').isLength({ min: 3 }),
+    //ruls fore regisger a new user.
+    body('password').isLength({ min: 6 }),
     body('first_name').isLength({ min: 2 }),
     body('last_name').isLength({ min: 2 }),
 ];
