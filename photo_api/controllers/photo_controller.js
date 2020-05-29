@@ -36,12 +36,21 @@ const index = async (req, res) => {
 const show = async (req, res) => {
 	const photo = await new models.Photos({ id: req.params.photoId })
 		.fetch();
-	res.send({
-		status: 'success',
-		data: {
-			photo,
+
+		//check if user own the album
+		if(req.user.id === photo.attributes.user_id){
+			res.send({
+				status: 'success',
+				data: {
+					photo,
+				}
+			});
+		} else {
+			res.send({
+				status:'fail',
+				data: "sorry, you don't own that album"
+			})
 		}
-	});
 }
 
 //store a new resurs in db

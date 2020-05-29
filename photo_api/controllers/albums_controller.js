@@ -34,7 +34,6 @@ const index = async (req, res) => {
  * GET /:albumId
  */
 const show = async (req, res) => {
-	
 	const album = await new models.Albums({ id: req.params.albumId })
 		.fetch({ withRelated: ['photos'] });
 
