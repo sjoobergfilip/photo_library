@@ -23,17 +23,50 @@ const getProfile = async (req, res) => {
 		}
 	});
 }
-/**
- * Get the authenticated user's photo
- *
- * GET /photos
- */
+
 const getPhotos = async (req, res) => {
-	res.status(405).send({
-		status: 'error',
-		message: 'This is a workshop.',
-	});
-}
+	console.log(req.user)
+		// query db for user and eager load the books relation
+		let user = null;
+		try {
+			user = await models.User.fetchById(req.user.data.id, { withRelated: ['photos'] });
+		} catch (error) {
+			console.error(error);
+			res.sendStatus(404);
+			return;
+		}
+		// get this user's book
+		const photos = user.related('photos');
+		res.send({
+			status: 'success',
+			data: {
+				photos,
+			},
+		});
+	}
+
+
+	const getAlbums = async (req, res) => {
+	console.log(req.body)
+		// query db for user and eager load the books relation
+		let user = null;
+		try {
+			user = await models.User.fetchById(req.user.data.id, { withRelated: ['albums'] });
+		} catch (error) {
+			console.error(error);
+			res.sendStatus(404);
+			return;
+		}
+		// get this user's book
+		const albums = user.related('albums');
+		res.send({
+			status: 'success',
+			data: {
+				albums,
+			},
+		});
+	}
+
 /**
  * Update the authenticated user's profile
  *
@@ -48,5 +81,6 @@ const updateProfile = async (req, res) => {
 module.exports = {
 	getProfile,
 	getPhotos,
+	getAlbums,
 	updateProfile,
 }

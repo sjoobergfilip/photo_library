@@ -10,12 +10,22 @@ const models = require('../models');
  * GET /
  */
 const index = async (req, res) => {
-	const all_photos = await models.Photos.fetchAll();
+	// query db for user and eager load the books relation
+	let user = null;
+	try {
+		user = await models.User.fetchById(req.user.data.id, { withRelated: ['photos'] });
+	} catch (error) {
+		console.error(error);
+		res.sendStatus(404);
+		return;
+	}
+	// get this user's book
+	const photos = user.related('photos');
 	res.send({
 		status: 'success',
 		data: {
-			photos: all_photos
-		}
+			photos,
+		},
 	});
 }
 /**

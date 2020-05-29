@@ -9,12 +9,23 @@ const models = require('../models');
  * GET /
  */
 const index = async (req, res) => {
-	const all_albums = await models.Albums.fetchAll();
+
+	// query db for user and eager load the books relation
+	let user = null;
+	try {
+		user = await models.User.fetchById(req.user.data.id, { withRelated: ['albums'] });
+	} catch (error) {
+		console.error(error);
+		res.sendStatus(404);
+		return;
+	}
+	// get this user's book
+	const albums = user.related('albums');
 	res.send({
 		status: 'success',
 		data: {
-			albums: all_albums
-		}
+			albums,
+		},
 	});
 }
 /**
@@ -23,14 +34,24 @@ const index = async (req, res) => {
  * GET /:albumId
  */
 const show = async (req, res) => {
+	
 	const album = await new models.Albums({ id: req.params.albumId })
 		.fetch({ withRelated: ['photos'] });
-	res.send({
-		status: 'success',
-		data: {
-			album,
+
+		//check if user own the album
+		if(req.user.id === album.attributes.user_id){
+			res.send({
+				status: 'success',
+				data: {
+					album,
+				}
+			});
+		} else {
+			res.send({
+				status:'fail',
+				data: "sorry, you don't own that album"
+			})
 		}
-	});
 }
 /**
  * Store a new resource

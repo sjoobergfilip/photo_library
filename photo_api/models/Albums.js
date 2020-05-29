@@ -7,6 +7,9 @@ module.exports = (bookshelf) => {
 		tableName: 'albums',
 		photos() {
 			return this.hasMany('Photos');
+		},
+		users(){
+			return this.belongsTo('User');
 		}
 	});
 }

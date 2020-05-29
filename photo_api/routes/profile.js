@@ -7,4 +7,7 @@ router.get('/', profileController.getProfile);
 //  GET profile's photos
 router.get('/photos', profileController.getPhotos);
 
+//  GET profile's albums
+router.get('/albums', profileController.getAlbums);
+
 module.exports = router;

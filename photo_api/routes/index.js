@@ -12,13 +12,13 @@ router.get('/', (req, res) => {
 });
 
 
-router.use('/albums', require('./albums'));
-router.use('/photos', require('./photos'));
+router.use('/albums', [auth.basic], require('./albums'));
+router.use('/photos', [auth.basic], require('./photos'));
 
 // POST
 router.use('/profile', [auth.basic], require('./profile'));
 router.post('/register', [userValidationRules.createRules], authController.register);
-router.use('/users', require('./users'));
+router.use('/users', [auth.basic], require('./users'));
 
 //login and auth
 router.post('/login', [auth.basic], login.getProfile);

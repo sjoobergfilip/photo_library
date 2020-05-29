@@ -13,10 +13,7 @@ const basic = async (req, res, next) => {
 		});
 		return;
 	}
-	// "Basic a2FsbGUyMDAwOnNjcmlwdC1raWRxd2Vxd2Vxd2Vxd2Vxd2Vxd2Vxd2U="
-	// =>
-	// [0] = "Basic"
-	// [1] = "a2FsbGUyMDAwOnNjcmlwdC1raWRxd2Vxd2Vxd2Vxd2Vxd2Vxd2Vxd2U="
+	
 	const [authSchema, base64Payload] = req.headers.authorization.split(' ');
 
 	if (authSchema.toLowerCase() !== "basic") {
