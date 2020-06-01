@@ -10,8 +10,7 @@ const createRules = [
         }
         return Promise.resolve();
     }),
-    //ruls fore regisger a new Album.
-    body('title').isLength({ min: 3 }),
+
 ];
 
 module.exports = {

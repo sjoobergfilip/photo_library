@@ -69,7 +69,7 @@ const store = async (req, res) => {
 	}
 	const validData = matchedData(req)
 	try {
-		const photo = await new models.Photos(validData).save();
+		const photo = await new models.Photos(validData).save({user_id: req.user.attributes.id});
 		console.log("Created new photo successfully:", photo);
 		res.send({
 			status: 'success',

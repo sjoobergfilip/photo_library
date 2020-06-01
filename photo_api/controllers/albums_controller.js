@@ -62,7 +62,7 @@ const store = async (req, res) => {
 	// Finds the validation errors in this request and wraps them in an object with handy functions
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
-		console.log("Create photo request failed validation:", errors.array());
+		console.log("Create album request failed validation:", errors.array());
 		res.status(422).send({
 			status: 'fail',
 			data: errors.array(),
@@ -71,13 +71,9 @@ const store = async (req, res) => {
 	}
 	const validData = matchedData(req)
 	try {
-		const album = await new models.Albums(validData).save();
-		console.log("Created new photo successfully:", album);
+		const album = await new models.Albums(validData).save({user_id: req.user.attributes.id});
 		res.send({
-			status: 'success',
-			data: {
-				album,
-			},
+			album
 		});
 	} catch (error) {
 		res.status(500).send({
