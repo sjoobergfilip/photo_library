@@ -1,16 +1,21 @@
 /**
  * Album Controller
  */
+
+
 const { matchedData, validationResult } = require('express-validator');
 const models = require('../models');
+
+
 /**
  * Get all resources
- *
- * GET /
+ 
  */
+
+
 const index = async (req, res) => {
 
-	// query db for user and eager load the books relation
+	// query db for user and eager load the albums relation
 	let user = null;
 	try {
 		user = await models.User.fetchById(req.user.data.id, { withRelated: ['albums'] });
@@ -19,7 +24,7 @@ const index = async (req, res) => {
 		res.sendStatus(404);
 		return;
 	}
-	// get this user's book
+	// get this user's album
 	const albums = user.related('albums');
 	res.send({
 		status: 'success',
@@ -53,7 +58,6 @@ const show = async (req, res) => {
 		}
 }
 /**
- * Store a new resource
  *
  * POST /
  */

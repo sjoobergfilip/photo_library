@@ -10,7 +10,7 @@ const models = require('../models');
  * GET /
  */
 const index = async (req, res) => {
-	// query db for user and eager load the books relation
+	// query db for user and eager load the photos relation
 	let user = null;
 	try {
 		user = await models.User.fetchById(req.user.data.id, { withRelated: ['photos'] });
