@@ -90,6 +90,11 @@ const store = async (req, res) => {
 
 const photoToAlbum = async (req, res) => {
 	const errors = validationResult(req);
+
+	const allAlbum = await models.Albums.query()
+	console.log('this is users id', allAlbum);
+
+
 	if (!errors.isEmpty()) {
 		console.log("Create album request failed validation:", errors.array());
 		res.status(422).send({
@@ -101,11 +106,19 @@ const photoToAlbum = async (req, res) => {
 	try {
 		const photo = await models.Photos.fetchById(req.body.photo_id)
 		const album = await models.Albums.fetchById(req.params.albumId)
-		const result = await album.photos().attach([photo])
-		res.status(201).send({
-			status: 'success',
-			data: result
-		})
+
+		if(photo.attributes.user_id === album.attributes.user_id) {
+			const result = await album.photos().attach([photo])
+			res.status(201).send({
+				status: 'success',
+				data: result
+			})
+		} else {
+			res.send({
+				status: 'fail',
+				data: "you don't own that album"
+			})
+		}
 	} catch(error){
 		res.sendStatus(404)
 		throw error;

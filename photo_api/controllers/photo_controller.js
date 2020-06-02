@@ -59,6 +59,7 @@ const store = async (req, res) => {
 
 	// Finds the validation errors in this request and wraps them in an object with handy functions
 	const errors = validationResult(req);
+	console.log('this is our req', req)
 	if (!errors.isEmpty()) {
 		console.log("Create photo request failed validation:", errors.array());
 		res.status(422).send({
