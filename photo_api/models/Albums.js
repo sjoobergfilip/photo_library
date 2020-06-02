@@ -6,10 +6,14 @@ module.exports = (bookshelf) => {
 	return bookshelf.model('Albums', {
 		tableName: 'albums',
 		photos() {
-			return this.hasMany('Photos');
+			return this.belongsToMany('Photos');
 		},
 		users(){
-			return this.belongsTo('User');
+			return this.belongsTo('User'); 
 		}
+		}, {
+			fetchById(id, fetchOptions = {}) {
+				return new this({ id }).fetch(fetchOptions);
+		} 
 	});
 }

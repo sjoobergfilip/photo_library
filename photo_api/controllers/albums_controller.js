@@ -87,6 +87,31 @@ const store = async (req, res) => {
 		throw error;
 	}
 }
+
+const photoToAlbum = async (req, res) => {
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		console.log("Create album request failed validation:", errors.array());
+		res.status(422).send({
+			status: 'fail',
+			data: errors.array(),
+		});
+		return;
+	}
+	try {
+		const photo = await models.Photos.fetchById(req.body.photo_id)
+		const album = await models.Albums.fetchById(req.params.albumId)
+		const result = await album.photos().attach([photo])
+		res.status(201).send({
+			status: 'success',
+			data: result
+		})
+	} catch(error){
+		res.sendStatus(404)
+		throw error;
+	}
+}
+
 /**
  * Update a specific resource
  *
@@ -113,6 +138,7 @@ module.exports = {
 	index,
 	show,
 	store,
+	photoToAlbum,
 	update,
 	destroy,
 }

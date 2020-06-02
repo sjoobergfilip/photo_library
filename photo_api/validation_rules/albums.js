@@ -13,6 +13,13 @@ const createRules = [
 
 ];
 
+const photoToAlbum = [
+    body('photo_id').custom(value =>{
+        return models.Photos.fetchById(value);
+    })
+]
+
 module.exports = {
     createRules,
+    photoToAlbum,
 }
