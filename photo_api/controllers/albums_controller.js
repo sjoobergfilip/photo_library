@@ -51,7 +51,7 @@ const show = async (req, res) => {
 				}
 			});
 		} else {
-			res.send({
+			res.status(401).send({
 				status:'fail',
 				data: "sorry, you don't own that album"
 			})
@@ -107,6 +107,7 @@ const photoToAlbum = async (req, res) => {
 		const photo = await models.Photos.fetchById(req.body.photo_id)
 		const album = await models.Albums.fetchById(req.params.albumId)
 
+		//check if you own the album when you try to add a photo to an album
 		if(photo.attributes.user_id === album.attributes.user_id) {
 			const result = await album.photos().attach([photo])
 			res.status(201).send({
@@ -114,7 +115,7 @@ const photoToAlbum = async (req, res) => {
 				data: result
 			})
 		} else {
-			res.send({
+			res.status(401).send({
 				status: 'fail',
 				data: "you don't own that album"
 			})
