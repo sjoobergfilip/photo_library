@@ -10,27 +10,35 @@ const models = require('../models');
  * GET /
  */
 const index = async (req, res) => {
-	const all_users = await models.User.fetchAll();
+	if (!req.user) {
+		res.status(401).send({
+			status: 'fail',
+			data: 'Authentication Required.',
+		});
+		return;
+	}
 	res.send({
 		status: 'success',
 		data: {
-			users: all_users
+			user: {
+				id: req.user.attributes.id,
+				email: req.user.attributes.email,
+				first_name: req.user.attributes.first_name,
+				last_name: req.user.attributes.last_name,
+			},
 		}
 	});
 }
+
 /**
  * Get a specific resource
  *
  * GET /:userId
  */
 const show = async (req, res) => {
-	const user = await new models.User({ id: req.params.userId })
-		.fetch({ withRelated: ['photos'] });
-	res.send({
-		status: 'success',
-		data: {
-			user,
-		}
+	res.status(405).send({
+		status: 'fail',
+		message: 'Method Not Allowed.',
 	});
 }
 /**
